@@ -2,16 +2,62 @@
 #
 # Exercise 1.27
 
-with open('Data/portfolio.csv', 'rt') as f:
-    headers = next(f).strip().split(',')
-    data = f.read().strip()
-cost = 0
+# Original Code
+# with open('Data/portfolio.csv', 'rt') as f:
+#     headers = next(f).strip().split(',')
+#     data = f.read().strip()
+# cost = 0
 
-for item in data.split('\n'):
-    _, shares, price = item.split(',')
-    cost += int(shares)*float(price)
+# for item in data.split('\n'):
+#     _, shares, price = item.split(',')
+#     cost += int(shares)*float(price)
 
-print(f'Total cost {cost}')
+# print(f'Total cost {cost}')
+
+#Updated for functions
+# def portfolio_cost(filename):
+#     with open(filename, 'rt') as f:
+#         headers = next(f).strip().split(',')
+#         data = f.read().strip()
+#     cost = 0
+
+#     try:
+#         for item in data.split('\n'):
+#             stock_name, shares, price = item.split(',')
+#             cost += int(shares)*float(price)
+#     except ValueError:
+#         print(f'invalid input for {stock_name}')
+
+#     return cost
+
+#Updated for csv module and cli
+import sys
+import csv
+
+def portfolio_cost(filename):
+    with open(filename, 'rt') as f:
+        data = csv.reader(f)
+        header=next(data)
+        cost = 0
+
+        try:
+            for item in data:
+                stock_name, shares, price = item
+                cost += int(shares)*float(price)
+        except ValueError:
+            print(f'invalid input for {stock_name}')
+
+    return cost
+
+
+if len(sys.argv) == 2:
+    filename = sys.argv[1]
+else:
+    filename = 'Data/portfolio.csv'
+
+cost = portfolio_cost(filename)
+print('Total cost:', cost)
+
 
 # import gzip
 # with gzip.open('Data/portfolio.csv.gz', 'rt') as f:
