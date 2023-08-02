@@ -46,7 +46,6 @@ def read_prices(filename):
     prices = {}
     with open(filename, 'rt') as f:
         rows = csv.reader(f)
-        header = next(rows)
         for row in rows:
             if row != []:
                 prices[row[0]] = float(row[1])
@@ -60,8 +59,4 @@ portfolio = read_portfolio('Data/portfolio.csv')
 prices = read_prices('Data/prices.csv')
 
 for stock, shares, init_price in portfolio:
-    if stock in prices:
-        print(f'{stock:<4s}\t{init_price:0.2f}\t{prices[stock]:0.2f}\t{(prices[stock]-init_price)*shares: 0.2f}')
-    else:
-        print(f'Unknown price for stock {stock}')
-# bit of an oddity here, that AA stock doesn't exist in the prices file
+    print(f'{stock:<4s}\t{init_price:0.2f}\t{prices[stock]:0.2f}\t{(prices[stock]-init_price): 0.2f}')
