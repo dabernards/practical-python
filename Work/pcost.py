@@ -40,12 +40,12 @@ def portfolio_cost(filename):
         header=next(data)
         cost = 0
 
-        try:
-            for item in data:
+        for i, item in enumerate(data, start=1):
+            try:
                 stock_name, shares, price = item
                 cost += int(shares)*float(price)
-        except ValueError:
-            print(f'invalid input for {stock_name}')
+            except ValueError:
+                print(f'Row {i}: Couldn\'t convert {item}')
 
     return cost
 
