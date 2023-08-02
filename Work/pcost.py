@@ -41,8 +41,10 @@ def portfolio_cost(filename):
         cost = 0
 
         for i, item in enumerate(data, start=1):
+            record = dict(zip(header, item))
             try:
-                stock_name, shares, price = item
+                shares = int(record['shares'])
+                price = float(record['price'])
                 cost += int(shares)*float(price)
             except ValueError:
                 print(f'Row {i}: Couldn\'t convert {item}')

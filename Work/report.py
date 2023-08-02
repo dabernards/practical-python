@@ -25,21 +25,22 @@ def read_portfolio(filename):
         rows = csv.reader(f)
         headers = next(rows)
         for row in rows:
-            holding = (row[0], int(row[1]), float(row[2]))
-            protfolio.append(holding)
+            holding = dict(zip(headers, row))
+            # holding = (row[0], int(row[1]), float(row[2]))
+            protfolio.append({'name': holding['name'], 'shares': int(holding['shares']), 'price': float(holding['price'])})
     return protfolio
 
-def read_portfolio_dict(filename):
-    ''' Read a portfolio csv file and returns data as a list of dictionaries '''
+# def read_portfolio_dict(filename):
+#     ''' Read a portfolio csv file and returns data as a list of dictionaries '''
 
-    protfolio = []
-    with open(filename, 'rt') as f:
-        rows = csv.reader(f)
-        headers = next(rows)
-        for row in rows:
-            holding = {'name': row[0], 'shares': int(row[1]), 'price': float(row[2])}
-            protfolio.append(holding)
-    return protfolio
+#     protfolio = []
+#     with open(filename, 'rt') as f:
+#         rows = csv.reader(f)
+#         headers = next(rows)
+#         for row in rows:
+#             holding = {'stock': row[0], 'shares': int(row[1]), 'price': float(row[2])}
+#             protfolio.append(holding)
+#     return protfolio
 
 def read_prices(filename):
     ''' reads a set of prices from csv file and generates dictionary '''
@@ -54,15 +55,16 @@ def read_prices(filename):
 def make_report(portfolio, prices):
     ''' Generate a report string '''
     report =[]
-    for stock, shares, init_price in portfolio:
-        report.append((stock, shares, prices[stock], init_price-prices[stock]))
+    for item in portfolio:
+        report.append((item['name'], item['shares'], prices[item['name']], item['price']-prices[item['name']]))
     return report
 
 # print(read_portfolio('Data/portfolio.csv'))
 # print(read_portfolio_dict('Data/portfolio.csv'))
 # print(read_prices('Data/prices.csv'))
 
-portfolio = read_portfolio('Data/portfolio.csv')
+# portfolio = read_portfolio('Data/portfolio.csv')
+portfolio = read_portfolio('Data/portfoliodate.csv')
 prices = read_prices('Data/prices.csv')
 report = make_report(portfolio, prices)
 
