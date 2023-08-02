@@ -51,12 +51,28 @@ def read_prices(filename):
                 prices[row[0]] = float(row[1])
     return prices
 
+def make_report(portfolio, prices):
+    ''' Generate a report string '''
+    report =[]
+    for stock, shares, init_price in portfolio:
+        report.append((stock, shares, prices[stock], init_price-prices[stock]))
+    return report
+
 # print(read_portfolio('Data/portfolio.csv'))
 # print(read_portfolio_dict('Data/portfolio.csv'))
 # print(read_prices('Data/prices.csv'))
 
 portfolio = read_portfolio('Data/portfolio.csv')
 prices = read_prices('Data/prices.csv')
+report = make_report(portfolio, prices)
 
-for stock, shares, init_price in portfolio:
-    print(f'{stock:<4s}\t{init_price:0.2f}\t{prices[stock]:0.2f}\t{(prices[stock]-init_price): 0.2f}')
+headers = ('Name','Shares','Price','Change')
+for header in headers:
+    print(f'{header:>10s} ', end="")
+print()
+print(f'{"-"*10:10s} '*4)
+for r in report:
+    # print(r)
+    # print('%10s %10d %10.2f %10.2f' % r)
+    currency = f'${r[2]:.2f}'
+    print(f'{r[0]:>10s} {r[1]:>10d} {currency:>10s} {r[3]:>10.2f}')    
