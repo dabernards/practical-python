@@ -78,3 +78,17 @@ for r in report:
     # print('%10s %10d %10.2f %10.2f' % r)
     currency = f'${r[2]:.2f}'
     print(f'{r[0]:>10s} {r[1]:>10d} {currency:>10s} {r[3]:>10.2f}')    
+
+# from collections import Counter
+# total_shares = Counter()
+# for item in portfolio:
+#     total_shares[item['name']] += item['shares']
+
+# print(total_shares['IBM'])
+
+# from collections import defaultdict
+# holdings=defaultdict(list)
+# for item in portfolio:
+#     holdings[item['name']].append((item['shares'], item['price']))
+# print(holdings['IBM'])
+
