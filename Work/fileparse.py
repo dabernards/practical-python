@@ -3,12 +3,12 @@
 # Exercise 3.3
 import csv
 
-def parse_csv(filename, select=None, types=None, has_headers=False):
+def parse_csv(filename, select=None, types=None, has_headers=True, delimiter=","):
     '''
     Parse a CSV file into a list of records (provided version)
     '''
     with open(filename) as f:
-        rows = csv.reader(f)
+        rows = csv.reader(f, delimiter=delimiter)
 
         # Read the file headers
         if has_headers:
