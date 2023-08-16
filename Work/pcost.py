@@ -31,8 +31,7 @@
 #     return cost
 
 #Updated for csv module and cli
-import sys
-import csv
+
 from report import read_portfolio
 
 def portfolio_cost(filename):
@@ -54,16 +53,27 @@ def portfolio_cost(filename):
     return cost
 
 
-if len(sys.argv) == 2:
-    filename = sys.argv[1]
-else:
-    filename = 'Data/portfolio.csv'
-
-cost = portfolio_cost(filename)
-print('Total cost:', cost)
 
 
 # import gzip
 # with gzip.open('Data/portfolio.csv.gz', 'rt') as f:
 #     for line in f:
 #         print(line, end="")
+
+def main(args):
+    ''' normal way to use pcost.py 
+    if passed using sys.argv, first argument will be pcost.py!
+    '''
+    cost = portfolio_cost(args[1])
+    print('Total cost:', cost)
+
+
+if __name__ == '__main__':
+    import sys
+    if len(sys.argv) == 1:
+        sys.argv.append('Data/portfolio.csv')
+
+
+    main(sys.argv)
+
+

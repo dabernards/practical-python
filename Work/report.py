@@ -58,5 +58,21 @@ def portfolio_report(portfolio_filename, prices_filename):
     print_report(report)
     return
 
+
+
+
 # portfolio_report('Data/portfoliodate.csv', 'Data/prices.csv')
-portfolio_report('Data/portfolio.csv', 'Data/prices.csv')
+
+def main(args):
+    ''' normal way to use report.py 
+    if passed using sys.argv, first argument will be report.py!
+    '''
+    portfolio_report(args[1],args[2])
+
+
+if __name__ == '__main__':
+    import sys
+    if len(sys.argv)==3:
+        main(sys.argv)
+
+
