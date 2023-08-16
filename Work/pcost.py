@@ -33,22 +33,24 @@
 #Updated for csv module and cli
 import sys
 import csv
+from report import read_portfolio
 
 def portfolio_cost(filename):
-    with open(filename, 'rt') as f:
-        data = csv.reader(f)
-        header=next(data)
-        cost = 0
+    # with open(filename, 'rt') as f:
+    #     data = csv.reader(f)
+    #     header=next(data)
+    #     cost = 0
 
-        for i, item in enumerate(data, start=1):
-            record = dict(zip(header, item))
-            try:
-                shares = int(record['shares'])
-                price = float(record['price'])
-                cost += int(shares)*float(price)
-            except ValueError:
-                print(f'Row {i}: Couldn\'t convert {item}')
-
+    #     for i, item in enumerate(data, start=1):
+    #         record = dict(zip(header, item))
+    #         try:
+    #             shares = int(record['shares'])
+    #             price = float(record['price'])
+    #             cost += int(shares)*float(price)
+    #         except ValueError:
+    #             print(f'Row {i}: Couldn\'t convert {item}')
+    portfolio = read_portfolio(filename)
+    cost = sum([item['shares']*item['price'] for item in portfolio])
     return cost
 
 
