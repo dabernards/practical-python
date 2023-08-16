@@ -2,7 +2,8 @@
 #
 # Exercise 2.4
 
-import csv
+from fileparse import parse_csv
+# import csv
 
 def portfolio_cost(filename):
     '''Computes the total cost (shares*price) of a portfolio file'''
@@ -20,19 +21,20 @@ def portfolio_cost(filename):
 def read_portfolio(filename):
     ''' Read a portfolio csv file and returns data as a list of tuples '''
 
-    portfolio = []
-    with open(filename, 'rt') as f:
-        rows = csv.reader(f)
-        headers = next(rows)
-        for row in rows:
-            holding = dict(zip(headers, row))
-            # holding = (row[0], int(row[1]), float(row[2]))
-            stock = {
-                'name': holding['name'], 
-                'shares': int(holding['shares']), 
-                'price': float(holding['price'])
-            }
-            portfolio.append(stock)
+    # portfolio = []
+    # with open(filename, 'rt') as f:
+    #     rows = csv.reader(f)
+    #     headers = next(rows)
+    #     for row in rows:
+    #         holding = dict(zip(headers, row))
+    #         # holding = (row[0], int(row[1]), float(row[2]))
+    #         stock = {
+    #             'name': holding['name'], 
+    #             'shares': int(holding['shares']), 
+    #             'price': float(holding['price'])
+    #         }
+    #         portfolio.append(stock)
+    portfolio = parse_csv(filename, select=['name', 'shares', 'price'], types=[str, int, float], has_headers=True)
 
     return portfolio
 
@@ -50,13 +52,14 @@ def read_portfolio(filename):
 
 def read_prices(filename):
     ''' reads a set of prices from csv file and generates dictionary '''
-    prices = {}
-    with open(filename, 'rt') as f:
-        rows = csv.reader(f)
-        for row in rows:
-            if row != []:
-                prices[row[0]] = float(row[1])
-    return prices
+    # prices = {}
+    # with open(filename, 'rt') as f:
+    #     rows = csv.reader(f)
+    #     for row in rows:
+    #         if row != []:
+    #             prices[row[0]] = float(row[1])
+    prices = parse_csv(filename, types=[str,float], has_headers=False)
+    return dict(prices)
 
 def make_report(portfolio, prices):
     ''' Generate a report string '''
