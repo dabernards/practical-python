@@ -33,7 +33,7 @@ def make_report(portfolio, prices):
     ''' Generate a report string '''
     report =[]
     for item in portfolio:
-        report.append((item['name'], item['shares'], prices[item['name']], item['price']-prices[item['name']]))
+        report.append((item['name'], item['shares'], prices[item['name']], prices[item['name']]-item['price']))
     return report
 
 def print_report(report):
@@ -47,6 +47,7 @@ def print_report(report):
         # print('%10s %10d %10.2f %10.2f' % r)
         currency = f'${r[2]:.2f}'
         print(f'{r[0]:>10s} {r[1]:>10d} {currency:>10s} {r[3]:>10.2f}')    
+
 
 
 def portfolio_report(portfolio_filename, prices_filename):
