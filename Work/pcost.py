@@ -64,8 +64,9 @@ def main(args):
     ''' normal way to use pcost.py 
     if passed using sys.argv, first argument will be pcost.py!
     '''
-    cost = portfolio_cost(args[1])
-    print('Total cost:', cost)
+    with open(args[1], 'rt') as f:
+        cost = portfolio_cost(f)
+        print('Total cost:', cost)
 
 
 if __name__ == '__main__':

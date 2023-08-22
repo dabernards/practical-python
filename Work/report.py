@@ -20,13 +20,15 @@ def portfolio_cost(filename):
 
 def read_portfolio(filename):
     ''' Read a portfolio csv file and returns data as a list of tuples '''
-    portfolio = parse_csv(filename, select=['name', 'shares', 'price'], types=[str, int, float], has_headers=True)
+    with open(filename, 'rt') as f:
+        portfolio = parse_csv(f, select=['name', 'shares', 'price'], types=[str, int, float], has_headers=True)
 
     return portfolio
 
 def read_prices(filename):
     ''' reads a set of prices from csv file and generates dictionary '''
-    prices = parse_csv(filename, types=[str,float], has_headers=False)
+    with open(filename, 'rt') as f:
+        prices = parse_csv(f, types=[str,float], has_headers=False)
     return dict(prices)
 
 def make_report(portfolio, prices):
@@ -67,6 +69,7 @@ def main(args):
     ''' normal way to use report.py 
     if passed using sys.argv, first argument will be report.py!
     '''
+
     portfolio_report(args[1],args[2])
 
 
