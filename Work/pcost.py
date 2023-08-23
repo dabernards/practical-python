@@ -49,7 +49,7 @@ def portfolio_cost(filename):
     #         except ValueError:
     #             print(f'Row {i}: Couldn\'t convert {item}')
     portfolio = read_portfolio(filename)
-    cost = sum([item['shares']*item['price'] for item in portfolio])
+    cost = sum([item.shares*item.price for item in portfolio])
     return cost
 
 
@@ -64,16 +64,15 @@ def main(args):
     ''' normal way to use pcost.py 
     if passed using sys.argv, first argument will be pcost.py!
     '''
-    with open(args[1], 'rt') as f:
-        cost = portfolio_cost(f)
-        print('Total cost:', cost)
+    #with open(args[1], 'rt') as f:
+    cost = portfolio_cost(args[1])
+    print('Total cost:', cost)
 
 
 if __name__ == '__main__':
     import sys
     if len(sys.argv) == 1:
-        sys.argv.append('Data/portfolio.csv')
-
+        sys.argv.append('/home/dab68/Python/practical-python/Work/Data/portfolio.csv')
 
     main(sys.argv)
 

@@ -3,7 +3,7 @@
 # Exercise 2.4
 
 from fileparse import parse_csv
-# import csv
+from stock import Stock
 
 def portfolio_cost(filename):
     '''Computes the total cost (shares*price) of a portfolio file'''
@@ -22,7 +22,7 @@ def read_portfolio(filename):
     ''' Read a portfolio csv file and returns data as a list of tuples '''
     with open(filename, 'rt') as f:
         portfolio = parse_csv(f, select=['name', 'shares', 'price'], types=[str, int, float], has_headers=True)
-
+    portfolio = [Stock(item['name'], item['shares'], item['price']) for item in portfolio]
     return portfolio
 
 def read_prices(filename):
@@ -35,7 +35,7 @@ def make_report(portfolio, prices):
     ''' Generate a report string '''
     report =[]
     for item in portfolio:
-        report.append((item['name'], item['shares'], prices[item['name']], prices[item['name']]-item['price']))
+        report.append((item.name, item.shares, prices[item.name], prices[item.name]-item.price))
     return report
 
 def print_report(report):
