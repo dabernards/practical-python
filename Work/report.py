@@ -4,6 +4,7 @@
 
 from fileparse import parse_csv
 from stock import Stock
+import tableformat
 
 def portfolio_cost(filename):
     '''Computes the total cost (shares*price) of a portfolio file'''
@@ -38,18 +39,19 @@ def make_report(portfolio, prices):
         report.append((item.name, item.shares, prices[item.name], prices[item.name]-item.price))
     return report
 
-def print_report(report):
-    headers = ('Name','Shares','Price','Change')
-    for header in headers:
-        print(f'{header:>10s} ', end="")
-    print()
-    print(f'{"-"*10:10s} '*4)
-    for r in report:
+def print_report(report, formatter):
+    formatter.headings(['Name','Shares','Price','Change'])
+    # for header in headers:
+    #     print(f'{header:>10s} ', end="")
+    # print()
+    # print(f'{"-"*10:10s} '*4)
+    for name, shares, price, change in report:
         # print(r)
         # print('%10s %10d %10.2f %10.2f' % r)
-        currency = f'${r[2]:.2f}'
-        print(f'{r[0]:>10s} {r[1]:>10d} {currency:>10s} {r[3]:>10.2f}')    
-
+        # currency = f'${r[2]:.2f}'
+        # print(f'{r[0]:>10s} {r[1]:>10d} {currency:>10s} {r[3]:>10.2f}')    
+        rowdata = [name, str(shares), f'${price:0.2f}', f'{change:0.2f}']
+        formatter.row(rowdata)
 
 
 def portfolio_report(portfolio_filename, prices_filename):
@@ -57,7 +59,8 @@ def portfolio_report(portfolio_filename, prices_filename):
     prices = read_prices(prices_filename)
     report = make_report(portfolio, prices)
     print(f'{portfolio_filename:-^43s}')
-    print_report(report)
+    formatter = tableformat.TextTableFormatter()
+    print_report(report, formatter)
     return
 
 
