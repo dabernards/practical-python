@@ -1,6 +1,17 @@
 # tableformat.py
 # provided class
 
+def create_formatter(fmt):
+    if fmt == 'txt':
+        return TextTableFormatter()
+    elif fmt == 'csv':
+        return CSVTableFormatter()
+    elif fmt == 'html':
+        return HTMLTableFormatter()
+    else:
+        raise RuntimeError(f'Unknown format {fmt}')
+
+
 class TableFormatter:
     def headings(self, headers):
         '''
@@ -28,3 +39,24 @@ class TextTableFormatter(TableFormatter):
         for d in rowdata:
             print(f'{d:>10s}', end=' ')
         print()
+
+class CSVTableFormatter(TableFormatter):
+    '''
+    Output portfolio data in CSV format.
+    '''
+    def headings(self, headers):
+        print(','.join(headers))
+
+    def row(self, rowdata):
+        print(','.join(rowdata))
+
+class HTMLTableFormatter(TableFormatter):
+    '''
+    Output portfolio data in CSV format.
+    '''
+    def headings(self, headers):
+        print('<tr><th>','</th><th>'.join(headers),"</th></tr>", sep="")
+
+    def row(self, rowdata):
+        print('<tr><th>','</th><th>'.join(rowdata),"</th></tr>", sep="")
+

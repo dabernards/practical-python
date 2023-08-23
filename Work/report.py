@@ -54,12 +54,12 @@ def print_report(report, formatter):
         formatter.row(rowdata)
 
 
-def portfolio_report(portfolio_filename, prices_filename):
+def portfolio_report(portfolio_filename, prices_filename, fmt='txt'):
     portfolio = read_portfolio(portfolio_filename)
     prices = read_prices(prices_filename)
     report = make_report(portfolio, prices)
     print(f'{portfolio_filename:-^43s}')
-    formatter = tableformat.TextTableFormatter()
+    formatter = tableformat.create_formatter(fmt)
     print_report(report, formatter)
     return
 
@@ -68,17 +68,19 @@ def portfolio_report(portfolio_filename, prices_filename):
 
 # portfolio_report('Data/portfoliodate.csv', 'Data/prices.csv')
 
-def main(args):
+def main(args, fmt="txt"):
     ''' normal way to use report.py 
     if passed using sys.argv, first argument will be report.py!
     '''
 
-    portfolio_report(args[1],args[2])
+    portfolio_report(args[1],args[2], fmt)
 
 
 if __name__ == '__main__':
     import sys
     if len(sys.argv)==3:
         main(sys.argv)
+    if len(sys.argv)==4:
+        main(sys.argv[:-1], fmt=sys.argv[-1])
 
 
