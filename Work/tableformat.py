@@ -11,6 +11,14 @@ def create_formatter(fmt):
     else:
         raise FormatError(f'Unknown table format {fmt}')
 
+def print_table(portfolio, select, formatter):
+    ''' print arbitrary table '''
+    formatter.headings(select)
+    for s in portfolio:
+        for item in [getattr(s,col) for col in select]:
+            print(f'{str(item):>10s} ', end="")
+        print()
+
 
 class TableFormatter:
     def headings(self, headers):
