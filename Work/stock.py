@@ -10,6 +10,8 @@ class Stock:
     def __repr__(self):
         ''' make it look nice '''
         return f'Stock({self.name}, {self.shares}, {self.price})'
+    
+    @property
     def cost(self):
         ''' calc cost of a stock holding '''
         return self.shares * self.price

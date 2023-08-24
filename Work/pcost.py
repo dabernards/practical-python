@@ -49,7 +49,7 @@ def portfolio_cost(filename):
     #         except ValueError:
     #             print(f'Row {i}: Couldn\'t convert {item}')
     portfolio = read_portfolio(filename)
-    cost = sum([item.shares*item.price for item in portfolio])
+    cost = sum([item.cost for item in portfolio])
     return cost
 
 
