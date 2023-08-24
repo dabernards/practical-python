@@ -9,7 +9,7 @@ def create_formatter(fmt):
     elif fmt == 'html':
         return HTMLTableFormatter()
     else:
-        raise RuntimeError(f'Unknown format {fmt}')
+        raise FormatError(f'Unknown table format {fmt}')
 
 
 class TableFormatter:
@@ -60,3 +60,6 @@ class HTMLTableFormatter(TableFormatter):
     def row(self, rowdata):
         print('<tr><th>','</th><th>'.join(rowdata),"</th></tr>", sep="")
 
+
+class FormatError(Exception):
+    pass
