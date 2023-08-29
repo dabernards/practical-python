@@ -5,6 +5,7 @@
 from fileparse import parse_csv
 from stock import Stock
 import tableformat
+from portfolio import Portfolio
 
 def portfolio_cost(filename):
     '''Computes the total cost (shares*price) of a portfolio file'''
@@ -24,7 +25,7 @@ def read_portfolio(filename):
     with open(filename, 'rt') as f:
         portfolio = parse_csv(f, select=['name', 'shares', 'price'], types=[str, int, float], has_headers=True)
     portfolio = [Stock(item['name'], item['shares'], item['price']) for item in portfolio]
-    return portfolio
+    return Portfolio(portfolio)
 
 def read_prices(filename):
     ''' reads a set of prices from csv file and generates dictionary '''
